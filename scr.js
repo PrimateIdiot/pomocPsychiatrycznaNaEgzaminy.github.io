@@ -142,75 +142,62 @@ const qaPairs = [
 ];
 
 
+let disableClickFlag = false;
+
+// Detect scrolling and set the disableClickFlag
+$(window).on('scroll', function () {
+    disableClickFlag = true;
+
+    // Clear any existing timer
+    clearTimeout($.data(this, 'scrollTimer'));
+
+    // Reset the flag 250ms after scrolling stops
+    $.data(this, 'scrollTimer', setTimeout(function () {
+        disableClickFlag = false;
+    }, 250));
+});
+
+// Setup dark mode toggle
 function setupDarkModeToggle() {
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    $('#dark-mode-toggle').on('change', function () {
+        $('body').toggleClass('dark-mode');
 
-    darkModeToggle.addEventListener('change', () => {
-        document.body.classList.toggle('dark-mode');
-
-        if (document.body.classList.contains('dark-mode')) {
-            console.log("Dark mode enabled");
+        if ($('body').hasClass('dark-mode')) {
+            console.log('Dark mode enabled');
         } else {
-            console.log("Dark mode disabled");
+            console.log('Dark mode disabled');
         }
     });
 }
 
+// Display questions
 function displayQuestions() {
-    const container = document.getElementById('questions-container');
+    const $container = $('#questions-container');
 
-    qaPairs.forEach((pair, index) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.classList.add('question');
-        questionDiv.textContent = pair.question;
+    qaPairs.forEach((pair) => {
+        const $questionDiv = $('<div>').addClass('question').text(pair.question);
+        const $answerDiv = $('<div>').addClass('answer').text(pair.answer).hide(); // Hide the answer initially
 
-        const answerDiv = document.createElement('div');
-        answerDiv.classList.add('answer');
-        answerDiv.textContent = pair.answer;
-        answerDiv.style.display = 'none'; // Hide initially
-
-        // Scroll detection logic
-        let isScrolling = false;
-        let startY = 0;
-
-        // Detect start of touch
-        questionDiv.addEventListener('touchstart', (e) => {
-            isScrolling = false;
-            startY = e.touches[0].clientY;
-        });
-
-        // Detect movement
-        questionDiv.addEventListener('touchmove', (e) => {
-            const moveY = e.touches[0].clientY;
-            if (Math.abs(moveY - startY) > 10) {
-                isScrolling = true; // Mark as scrolling if user moves finger > 10px
+        // Attach click and touchstart handlers
+        $questionDiv.on('click touchstart', function (e) {
+            // If scrolling, prevent click behavior
+            if (disableClickFlag) {
+                e.preventDefault();
+                return;
             }
+
+            // Toggle answer display
+            $answerDiv.slideToggle();
         });
 
-        // Detect end of touch
-        questionDiv.addEventListener('touchend', (e) => {
-            if (!isScrolling) {
-                toggleAnswerDisplay(answerDiv); // Only toggle if not scrolling
-            }
-        });
-
-        // For desktop, use click event
-        questionDiv.addEventListener('click', () => {
-            toggleAnswerDisplay(answerDiv);
-        });
-
-        container.appendChild(questionDiv);
-        container.appendChild(answerDiv);
+        $container.append($questionDiv, $answerDiv);
     });
 }
 
-function toggleAnswerDisplay(answerDiv) {
-    answerDiv.style.display = (answerDiv.style.display === 'block') ? 'none' : 'block';
-}
-
+// Reshuffle questions
 function reshuffleQuestions() {
-    const container = document.getElementById('questions-container');
-    container.innerHTML = ''; // Clear the current content
+    const $container = $('#questions-container');
+    $container.empty(); // Clear existing content
 
     // Shuffle the array using the Fisher-Yates algorithm
     const shuffledPairs = [...qaPairs];
@@ -219,53 +206,35 @@ function reshuffleQuestions() {
         [shuffledPairs[i], shuffledPairs[j]] = [shuffledPairs[j], shuffledPairs[i]];
     }
 
-    // Re-display the shuffled questions
+    // Display shuffled questions
     shuffledPairs.forEach((pair) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.classList.add('question');
-        questionDiv.textContent = pair.question;
+        const $questionDiv = $('<div>').addClass('question').text(pair.question);
+        const $answerDiv = $('<div>').addClass('answer').text(pair.answer).hide(); // Hide the answer initially
 
-        const answerDiv = document.createElement('div');
-        answerDiv.classList.add('answer');
-        answerDiv.textContent = pair.answer;
-        answerDiv.style.display = 'none'; // Hide initially
-
-        let isScrolling = false;
-        let startY = 0;
-
-        questionDiv.addEventListener('touchstart', (e) => {
-            isScrolling = false;
-            startY = e.touches[0].clientY;
-        });
-
-        questionDiv.addEventListener('touchmove', (e) => {
-            const moveY = e.touches[0].clientY;
-            if (Math.abs(moveY - startY) > 10) {
-                isScrolling = true;
+        // Attach click and touchstart handlers
+        $questionDiv.on('click touchstart', function (e) {
+            if (disableClickFlag) {
+                e.preventDefault();
+                return;
             }
+
+            $answerDiv.slideToggle(); // Toggle answer visibility with animation
         });
 
-        questionDiv.addEventListener('touchend', (e) => {
-            if (!isScrolling) {
-                toggleAnswerDisplay(answerDiv);
-            }
-        });
-
-        questionDiv.addEventListener('click', () => {
-            toggleAnswerDisplay(answerDiv);
-        });
-
-        container.appendChild(questionDiv);
-        container.appendChild(answerDiv);
+        $container.append($questionDiv, $answerDiv);
     });
 
     // Add spinning animation to the button
-    const reshuffleButton = document.getElementById('reshuffle-questions');
-    reshuffleButton.classList.add('spinning');
-    setTimeout(() => reshuffleButton.classList.remove('spinning'), 500); // Remove spin after animation
+    const $reshuffleButton = $('#reshuffle-questions');
+    $reshuffleButton.addClass('spinning');
+    setTimeout(() => $reshuffleButton.removeClass('spinning'), 500); // Remove spin after animation
 }
 
-document.getElementById('reshuffle-questions').addEventListener('click', reshuffleQuestions);
+// Initialize the event handlers
+$('#reshuffle-questions').on('click', reshuffleQuestions);
 
-displayQuestions();
-setupDarkModeToggle();
+// Run the initial setup
+$(document).ready(function () {
+    displayQuestions();
+    setupDarkModeToggle();
+});
