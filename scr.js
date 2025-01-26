@@ -142,6 +142,7 @@ const qaPairs = [
 ];
 
 
+
 let disableClickFlag = false;
 
 // Detect scrolling and set the disableClickFlag
@@ -154,7 +155,7 @@ $(window).on('scroll', function () {
     // Reset the flag 250ms after scrolling stops
     $.data(this, 'scrollTimer', setTimeout(function () {
         disableClickFlag = false;
-    }, 250));
+    }, 150));
 });
 
 // Setup dark mode toggle

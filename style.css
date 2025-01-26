@@ -50,6 +50,10 @@ header {
     background-color: var(--secondary-color);
 }
 
+.question:focus {
+    background-color: var(--secondary-color);
+}
+
 .answer {
     display: none;
     margin-bottom: 10px;
