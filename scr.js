@@ -156,20 +156,6 @@ function setupDarkModeToggle() {
     });
 }
 
-function setupDarkModeToggle() {
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-    darkModeToggle.addEventListener('change', () => {
-        document.body.classList.toggle('dark-mode');
-
-        if (document.body.classList.contains('dark-mode')) {
-            console.log("Dark mode enabled");
-        } else {
-            console.log("Dark mode disabled");
-        }
-    });
-}
-
 function displayQuestions() {
     const container = document.getElementById('questions-container');
 
@@ -181,16 +167,35 @@ function displayQuestions() {
         const answerDiv = document.createElement('div');
         answerDiv.classList.add('answer');
         answerDiv.textContent = pair.answer;
-        answerDiv.style.display = 'none'; // Ensure answer is hidden initially
+        answerDiv.style.display = 'none'; // Hide initially
 
-        // Use 'touchstart' event for mobile compatibility
-        questionDiv.addEventListener('click', () => {
-            toggleAnswerDisplay(answerDiv);
+        // Scroll detection logic
+        let isScrolling = false;
+        let startY = 0;
+
+        // Detect start of touch
+        questionDiv.addEventListener('touchstart', (e) => {
+            isScrolling = false;
+            startY = e.touches[0].clientY;
         });
 
-        // Also add 'touchstart' for better mobile interaction
-        questionDiv.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevent any default action
+        // Detect movement
+        questionDiv.addEventListener('touchmove', (e) => {
+            const moveY = e.touches[0].clientY;
+            if (Math.abs(moveY - startY) > 10) {
+                isScrolling = true; // Mark as scrolling if user moves finger > 10px
+            }
+        });
+
+        // Detect end of touch
+        questionDiv.addEventListener('touchend', (e) => {
+            if (!isScrolling) {
+                toggleAnswerDisplay(answerDiv); // Only toggle if not scrolling
+            }
+        });
+
+        // For desktop, use click event
+        questionDiv.addEventListener('click', () => {
             toggleAnswerDisplay(answerDiv);
         });
 
@@ -200,7 +205,6 @@ function displayQuestions() {
 }
 
 function toggleAnswerDisplay(answerDiv) {
-    // Safely toggle the display of the answer
     answerDiv.style.display = (answerDiv.style.display === 'block') ? 'none' : 'block';
 }
 
@@ -224,15 +228,30 @@ function reshuffleQuestions() {
         const answerDiv = document.createElement('div');
         answerDiv.classList.add('answer');
         answerDiv.textContent = pair.answer;
-        answerDiv.style.display = 'none'; // Ensure answer is hidden initially
+        answerDiv.style.display = 'none'; // Hide initially
 
-        // Use 'touchstart' for better compatibility
-        questionDiv.addEventListener('click', () => {
-            toggleAnswerDisplay(answerDiv);
-        });
+        let isScrolling = false;
+        let startY = 0;
 
         questionDiv.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevent default on mobile
+            isScrolling = false;
+            startY = e.touches[0].clientY;
+        });
+
+        questionDiv.addEventListener('touchmove', (e) => {
+            const moveY = e.touches[0].clientY;
+            if (Math.abs(moveY - startY) > 10) {
+                isScrolling = true;
+            }
+        });
+
+        questionDiv.addEventListener('touchend', (e) => {
+            if (!isScrolling) {
+                toggleAnswerDisplay(answerDiv);
+            }
+        });
+
+        questionDiv.addEventListener('click', () => {
             toggleAnswerDisplay(answerDiv);
         });
 
