@@ -178,15 +178,15 @@ function displayQuestions() {
         const $questionDiv = $('<div>').addClass('question').text(pair.question);
         const $answerDiv = $('<div>').addClass('answer').text(pair.answer).hide(); // Hide the answer initially
 
-        // Attach click and touchstart handlers
-        $questionDiv.on('click touchstart', function (e) {
-            // If scrolling, prevent click behavior
+        // Attach click handler
+        $questionDiv.on('click', function (e) {
+            // Prevent clicks during scrolling
             if (disableClickFlag) {
                 e.preventDefault();
                 return;
             }
 
-            // Toggle answer display
+            // Toggle the visibility of the answer
             $answerDiv.slideToggle();
         });
 
@@ -211,8 +211,9 @@ function reshuffleQuestions() {
         const $questionDiv = $('<div>').addClass('question').text(pair.question);
         const $answerDiv = $('<div>').addClass('answer').text(pair.answer).hide(); // Hide the answer initially
 
-        // Attach click and touchstart handlers
-        $questionDiv.on('click touchstart', function (e) {
+        // Attach click handler
+        $questionDiv.on('click', function (e) {
+            // Prevent clicks during scrolling
             if (disableClickFlag) {
                 e.preventDefault();
                 return;
