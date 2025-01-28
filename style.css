@@ -1,10 +1,10 @@
 /* Color Variables */
 :root {
-    --background-color: #FBFBFE; 
-    --text-color: #000000; 
-    --primary-color: #E17564; 
-    --secondary-color: #ccc; 
-    --hover-color: #d86453; /* Light Mode Hover Color */
+    --background-color: #FBFBFE;
+    --text-color: #000000;
+    --primary-color: #E17564;
+    --secondary-color: #ccc;
+    --hover-color: #d86453;
 }
 
 /* Dark Mode Colors */
@@ -13,20 +13,18 @@ body.dark-mode {
     --text-color: #ffffff;
     --primary-color: #E17564;
     --secondary-color: #040813;
-    --hover-color: #b75d4f; /* Dark Mode Hover Color */
+    --hover-color: #b75d4f;
 }
 
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
-    line-height: 1.6;
     background-color: var(--background-color);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Typography and Alignment */
 h1 {
     text-align: center;
 }
@@ -40,13 +38,14 @@ header {
 }
 
 /* Button Styling */
-button, .category-button, .subject-button, #reshuffle-questions {
+.category-button, .subject-button {
     font-family: inherit;
     font-size: 1.5rem;
-    padding: 15px 20px;
+
     margin: 10px 0;
     width: 100%;
     max-width: 250px;
+    min-height: 230px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -54,12 +53,52 @@ button, .category-button, .subject-button, #reshuffle-questions {
     transition: all 0.3s ease;
 }
 
+#floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+#go-back-button {
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#go-back-button:hover {
+    background-color: var(--primary-color);
+}
+
+#go-back-button .icon {
+    font-size: 32px;
+    transform: translate(0px,-2px);
+    transition: transform 0.3s ease;
+}
+
+.subject-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Category Buttons */
 .category-button {
     background-color: var(--primary-color);
     color: var(--text-color);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    min-height: 230px;
 }
 
 .category-button:hover {
@@ -72,35 +111,12 @@ button, .category-button, .subject-button, #reshuffle-questions {
     background-color: var(--secondary-color);
     color: var(--text-color);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
 }
 
 .subject-button:hover {
     background-color: var(--hover-color);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Question & Answer Styles */
-.question {
-    cursor: pointer;
-    margin-bottom: 10px;
-    border: 1px solid var(--secondary-color);
-    padding: 10px;
-    background-color: var(--background-color);
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.question:hover, .question:focus {
-    background-color: var(--secondary-color);
-}
-
-.answer {
-    display: none;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: var(--secondary-color);
-    border-left: 3px solid var(--primary-color);
-    border-radius: 5px;
 }
 
 /* Flexbox Styling for Button Layout */
@@ -110,67 +126,8 @@ button, .category-button, .subject-button, #reshuffle-questions {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     padding: 20px;
-    gap: 10px;
-}
-
-/* Floating Buttons */
-#floating-buttons {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    gap: 10px;
-    z-index: 1000;
-}
-
-/* Reshuffle Button */
-#reshuffle-questions {
-    background-color: var(--primary-color);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    max-width: 60px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#reshuffle-questions:hover {
-    background-color: var(--primary-color);
-}
-
-#reshuffle-questions .icon {
-    font-size: 32px;
-    transition: transform 0.3s ease;
-}
-
-#reshuffle-questions.spinning .icon {
-    animation: spin 0.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
-}
-
-/* Keyframes for Spin Animation */
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* Reshuffle Button on Small Screens */
-@media (max-width: 768px) {
-    #reshuffle-questions .icon {
-        font-size: 22px;
-    }
-
-    #reshuffle-questions {
-        max-width: 40px;
-        max-height: 40px;
-        padding: 8px;
-    }
 }
 
 /* Dark Mode Toggle */
@@ -196,11 +153,11 @@ button, .category-button, .subject-button, #reshuffle-questions {
     bottom: 0;
     background-color: var(--secondary-color);
     border-radius: 40px;
-    transition: background-color 0.4s, box-shadow 0.3s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 5px;
+    transition: background-color 0.4s;
 }
 
 .slider:before {
@@ -211,12 +168,11 @@ button, .category-button, .subject-button, #reshuffle-questions {
     left: 5px;
     bottom: 5px;
     background-color: var(--background-color);
-    transition: transform 0.4s, box-shadow 0.3s ease-in-out;
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s;
 }
 
-/* Icons */
 .slider .icon {
     font-size: 18px;
     color: var(--text-color);
@@ -248,44 +204,4 @@ button, .category-button, .subject-button, #reshuffle-questions {
 
 .toggle input:checked + .slider .moon {
     opacity: 1;
-}
-
-/* Scrollbar Styles */
-::-webkit-scrollbar {
-    width: 18px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: var(--background-color);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 10px;
-    border: 3px solid var(--background-color);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--secondary-color);
-}
-
-/* For Firefox */
-scrollbar {
-    width: 18px;
-}
-
-scrollbar-track {
-    background-color: var(--background-color);
-    border-radius: 10px;
-}
-
-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 10px;
-    border: 3px solid var(--background-color);
-}
-
-scrollbar-thumb:hover {
-    background-color: var(--secondary-color);
 }

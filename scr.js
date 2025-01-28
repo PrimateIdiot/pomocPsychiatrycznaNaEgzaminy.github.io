@@ -1,131 +1,79 @@
 // Categories and their subjects
 const categories = {
-    "Percepcja wzrokowa": ["Subject A", "Subject B", "Subject C"],
+    "Percepcja wzrokowa": ["Egzamin 1", "Subject B", "Subject C"],
     "Podstawy samokształcenia": ["Subject X", "Subject Y", "Subject Z"]
 };
 
 // Dynamic question container
 const $container = $("#questions-container");
+const $goBackButton = $("#go-back-button"); // Get the go back button
 
-let disableClickFlag = false;
-let currentCategory = null; 
-let currentSubject = null; 
-let currentPage = 'categories'; 
+// Function to setup the dark mode toggle
+function setupDarkModeToggle() {
+    $("#dark-mode-toggle").on("change", function () {
+        $("body").toggleClass("dark-mode");
+    });
+}
 
-// Detect scrolling and disable clicks during scrolling
+// Show category and subject buttons
+function showCategoryButtons() {
+    $container.empty(); // Clear existing content
+    
+    Object.keys(categories).forEach((category) => {
+        // Create a category button
+        const $categoryButton = $("<button>")
+            .addClass("category-button")
+            .text(category)
+            .on("click", function () {
+                showSubjectButtons(category);
+            });
+        $container.append($categoryButton);
+    });
+
+    // Hide the "Go Back" button when in category view
+    $goBackButton.hide();
+}
+
+// Show subject buttons for the selected category
+function showSubjectButtons(category) {
+    $container.empty(); // Clear existing content
+    
+    categories[category].forEach((subject) => {
+        // Create a subject button that links to the sub-website with query parameters
+        const $subjectButton = $("<a>")
+            .addClass("subject-button")
+            .text(subject)
+            .attr(
+                "href",
+                `subject.html?category=${encodeURIComponent(category)}&subject=${encodeURIComponent(subject)}`
+            ); // Add query parameters to the link
+        $container.append($subjectButton);
+    });
+
+    // Show the "Go Back" button when in subject view
+    $goBackButton.show();
+
+    // Add an event listener to the "Go Back" button to go back to category view
+    $goBackButton.off().on("click", function () {
+        showCategoryButtons(); // Show categories again
+    });
+}
+
+// Detect scrolling and set the disableClickFlag
 $(window).on("scroll", function () {
     disableClickFlag = true;
+
+    // Clear any existing timer
     clearTimeout($.data(this, "scrollTimer"));
+
+    // Reset the flag 150ms after scrolling stops
     $.data(this, "scrollTimer", setTimeout(function () {
         disableClickFlag = false;
     }, 150));
 });
 
-// Setup dark mode toggle
-function setupDarkModeToggle() {
-    $("#dark-mode-toggle").on("change", function () {
-        $("body").toggleClass("dark-mode");
-        console.log($("body").hasClass("dark-mode") ? "Dark mode enabled" : "Dark mode disabled");
-    });
-}
-
-// Show category buttons
-function showCategoryButtons() {
-    $container.empty();
-    Object.keys(categories).forEach((category) => {
-        $("<button>")
-            .fadeIn(200)
-            .addClass("category-button")
-            .text(category)
-            .on("click", () => showSubjectButtons(category))
-            .appendTo($container);
-    });
-
-    currentPage = 'categories';
-
-    // Handle reshuffle button visibility
-    toggleReshuffleButton(false);
-}
-
-// Show subject buttons for the selected category
-function showSubjectButtons(category) {
-    $container.empty();
-    categories[category].forEach((subject) => {
-        $("<button>")
-            .addClass("subject-button")
-            .text(subject)
-            .on("click", () => loadQuestions(category, subject))
-            .appendTo($container);
-    });
-
-    currentCategory = category;
-    currentSubject = null; 
-
-    currentPage = 'subjects';
-
-    // Handle reshuffle button visibility
-    toggleReshuffleButton(false);
-}
-
-// Load questions from a JSON file based on the subject
-function loadQuestions(category, subject) {
-    $container.empty();
-    const jsonFileName = subject.replace(" ", "_").toLowerCase() + ".json";
-
-    $.getJSON(jsonFileName)
-        .done((data) => {
-            data.forEach((pair) => {
-                const $qaContainer = $("<div>").addClass("qa-container");
-
-                const $questionDiv = $("<div>").addClass("question").text(pair.question);
-                const $answerDiv = $("<div>").addClass("answer").text(pair.answer).hide();
-
-                $qaContainer.append($questionDiv, $answerDiv).appendTo($container);
-
-                $questionDiv.on("click", function (e) {
-                    if (disableClickFlag) {
-                        e.preventDefault();
-                        return;
-                    }
-                    $answerDiv.stop(true, true).slideToggle();
-                });
-            });
-
-            currentSubject = subject;
-            currentPage = 'questions';
-
-            // Show reshuffle button
-            toggleReshuffleButton(true);
-        })
-        .fail(() => {
-            $container.append("<p>Could not load questions. Please try again later.</p>");
-        });
-}
-
-// Attach or detach reshuffle button functionality
-function toggleReshuffleButton(shouldShow) {
-    if (shouldShow) {
-        $("#reshuffle-questions").fadeIn(200);
-        $("#reshuffle-questions").off("click").on("click", reshuffleQuestions);
-    } else {
-        $("#reshuffle-questions").fadeOut(200);
-    }
-}
-
-// Reshuffle questions
-function reshuffleQuestions() {
-    const questionsDivs = $(".question").toArray().sort(() => Math.random() - 0.5);
-    $("#questions-container").empty().append(questionsDivs);
-
-    // Add spinning animation to the reshuffle button
-    const $reshuffleButton = $("#reshuffle-questions");
-    $reshuffleButton.addClass("spinning");
-    setTimeout(() => $reshuffleButton.removeClass("spinning"), 500); // Remove spin after animation
-}
-
 // Initialize the application
 $(document).ready(function () {
     setupDarkModeToggle();
-    showCategoryButtons();
-    toggleReshuffleButton(false);  // Initially hide reshuffle button
+    showCategoryButtons(); // Show categories on page load
 });

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Details</title>
+    <link rel="stylesheet" href="subject.css">
+</head>
+<body>
+    <header>
+        <h1 id="subject-title">Loading...</h1>
+        <label class="toggle">
+            <input type="checkbox" id="dark-mode-toggle" />
+            <span class="slider">
+                <span class="icon moon">&#x2600;</span>
+                <span class="icon sun">&#x2600;</span>
+            </span>
+        </label>
+    </header>
+    <div id="questions-container"></div>
+    <div id="floating-buttons">
+        <button id="reshuffle-questions">
+            <span class="icon">&#x21bb;</span>
+        </button>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+$(document).ready(function () {
+    const { category, subject } = getQueryParams();
+
+    if (category && subject) {
+        // Set the title
+        $("#subject-title").text(`${category} - ${subject}`);
+
+        // Fetch questions and display them
+        fetchQuestions(subject)
+            .done((data) => {
+                const $container = $("#questions-container");
+                data.forEach((qa) => {
+                    const $qaContainer = $("<div>").addClass("qa-container");
+
+                    const $questionDiv = $("<div>")
+                        .addClass("question")
+                        .text(qa.question);
+
+                    const $answerDiv = $("<div>")
+                        .addClass("answer")
+                        .text(qa.answer)
+                        .hide();
+
+                    $qaContainer.append($questionDiv, $answerDiv);
+                    $container.append($qaContainer);
+
+                    // Toggle answer visibility
+                    $questionDiv.on("click", function () {
+                        $answerDiv.stop(true, true).slideToggle();
+                    });
+                });
+            })
+            .fail(() => {
+                $("#questions-container").html(
+                    "<p>Could not load questions. Please try again later.</p>"
+                );
+            });
+    } else {
+        $("#subject-title").text("Invalid Subject");
+        $("#questions-container").html(
+            "<p>No subject data found. Please go back and select a valid subject.</p>"
+        );
+    }
+
+    // Attach dark mode toggle handler
+    setupDarkModeToggle();
+
+    // Attach reshuffle button handler
+    $('#reshuffle-questions').on('click', reshuffleQuestions);
+});
+
+// Parse query parameters from the URL
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        category: params.get("category"),
+        subject: params.get("subject"),
+    };
+}
+
+// Fetch questions from the JSON file
+function fetchQuestions(subject) {
+    const jsonFileName = `${"subjects/" + subject.replace(" ", "_").toLowerCase()}.json`;
+    return $.getJSON(jsonFileName);
+}
+
+let disableClickFlag = false;
+
+// Detect scrolling and set the disableClickFlag
+$(window).on("scroll", function () {
+    disableClickFlag = true;
+
+    // Clear any existing timer
+    clearTimeout($.data(this, "scrollTimer"));
+
+    // Reset the flag 150ms after scrolling stops
+    $.data(this, "scrollTimer", setTimeout(function () {
+        disableClickFlag = false;
+    }, 150));
+});
+
+// Setup dark mode toggle
+function setupDarkModeToggle() {
+    $("#dark-mode-toggle").on("change", function () {
+        $("body").toggleClass("dark-mode");
+
+        if ($("body").hasClass("dark-mode")) {
+            console.log("Dark mode enabled");
+        } else {
+            console.log("Dark mode disabled");
+        }
+    });
+}
+
+// Reshuffle questions
+function reshuffleQuestions() {
+    const $container = $("#questions-container");
+    const qaPairs = [];
+
+    // Fetch the current set of questions
+    $container.children(".qa-container").each(function () {
+        const question = $(this).find(".question").text();
+        const answer = $(this).find(".answer").text();
+        qaPairs.push({ question, answer });
+    });
+
+    // Clear existing content
+    $container.empty();
+
+    // Shuffle the array using the Fisher-Yates algorithm
+    for (let i = qaPairs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [qaPairs[i], qaPairs[j]] = [qaPairs[j], qaPairs[i]];
+    }
+
+    // Display shuffled questions
+    qaPairs.forEach((pair) => {
+        const $qaContainer = $("<div>").addClass("qa-container");
+
+        const $questionDiv = $("<div>")
+            .addClass("question")
+            .text(pair.question);
+
+        const $answerDiv = $("<div>")
+            .addClass("answer")
+            .text(pair.answer)
+            .hide();
+
+        $qaContainer.append($questionDiv, $answerDiv);
+        $container.append($qaContainer);
+
+        // Attach click handler
+        $questionDiv.on("click", function (e) {
+            if (disableClickFlag) {
+                e.preventDefault();
+                return;
+            }
+
+            $answerDiv.slideToggle();
+        });
+    });
+
+    // Add spinning animation to the button
+    const $reshuffleButton = $("#reshuffle-questions");
+    $reshuffleButton.addClass("spinning");
+    setTimeout(() => $reshuffleButton.removeClass("spinning"), 500);
+}
+
+    </script>
+</body>
+</html>
