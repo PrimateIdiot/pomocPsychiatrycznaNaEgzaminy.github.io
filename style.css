@@ -4,6 +4,7 @@
     --text-color: #000000; 
     --primary-color: #E17564; 
     --secondary-color: #ccc; 
+    --hover-color: #d86453; /* Light Mode Hover Color */
 }
 
 /* Dark Mode Colors */
@@ -12,6 +13,7 @@ body.dark-mode {
     --text-color: #ffffff;
     --primary-color: #E17564;
     --secondary-color: #040813;
+    --hover-color: #b75d4f; /* Dark Mode Hover Color */
 }
 
 /* General Styles */
@@ -24,15 +26,57 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Typography and Alignment */
 h1 {
     text-align: center;
 }
 
+/* Header */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+/* Button Styling */
+button, .category-button, .subject-button, #reshuffle-questions {
+    font-family: inherit;
+    font-size: 1.5rem;
+    padding: 15px 20px;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 250px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Category Buttons */
+.category-button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 230px;
+}
+
+.category-button:hover {
+    background-color: var(--hover-color);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Subject Buttons */
+.subject-button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.subject-button:hover {
+    background-color: var(--hover-color);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Question & Answer Styles */
@@ -46,11 +90,7 @@ header {
     transition: background-color 0.3s ease;
 }
 
-.question:hover {
-    background-color: var(--secondary-color);
-}
-
-.question:focus {
+.question:hover, .question:focus {
     background-color: var(--secondary-color);
 }
 
@@ -63,13 +103,23 @@ header {
     border-radius: 5px;
 }
 
+/* Flexbox Styling for Button Layout */
+#questions-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+}
+
 /* Floating Buttons */
 #floating-buttons {
     position: fixed;
     bottom: 20px;
     left: 20px;
     display: flex;
-    flex-direction: column;
     gap: 10px;
     z-index: 1000;
 }
@@ -82,6 +132,7 @@ header {
     align-items: center;
     justify-content: center;
     padding: 10px;
+    max-width: 60px;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -105,34 +156,29 @@ header {
 
 /* Keyframes for Spin Animation */
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
+/* Reshuffle Button on Small Screens */
 @media (max-width: 768px) {
     #reshuffle-questions .icon {
         font-size: 22px;
     }
 
     #reshuffle-questions {
-        width: 40px;
-        height: 40px;
+        max-width: 40px;
+        max-height: 40px;
         padding: 8px;
     }
 }
 
-
-
-/* Dark Mode Toggle (Switch) */
+/* Dark Mode Toggle */
 .toggle {
     position: relative;
     display: inline-block;
     width: 90px;
-    height: 40px; 
+    height: 40px;
 }
 
 .toggle input {
@@ -149,8 +195,8 @@ header {
     right: 0;
     bottom: 0;
     background-color: var(--secondary-color);
-    transition: background-color 0.4s, box-shadow 0.3s ease-in-out;
     border-radius: 40px;
+    transition: background-color 0.4s, box-shadow 0.3s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -161,8 +207,8 @@ header {
     content: "";
     position: absolute;
     height: 30px;
-    width: 30px; 
-    left: 5px; 
+    width: 30px;
+    left: 5px;
     bottom: 5px;
     background-color: var(--background-color);
     transition: transform 0.4s, box-shadow 0.3s ease-in-out;
@@ -180,14 +226,12 @@ header {
 
 .slider .sun {
     opacity: 1;
-    color: var(--text-color);
-    transform: translateX(-4px); 
+    transform: translateX(-4px);
 }
 
 .slider .moon {
     opacity: 0;
-    color: var(--text-color);
-    transform: translateX(4px); 
+    transform: translateX(4px);
 }
 
 .toggle input:checked + .slider {
@@ -206,32 +250,13 @@ header {
     opacity: 1;
 }
 
-
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
-
-body.dark-mode .question {
-    background-color: var(--background-color);
-    border-color: var(--secondary-color);
-}
-
-body.dark-mode .question:hover {
-    background-color: var(--secondary-color);
-}
-
-body.dark-mode .answer {
-    background-color: var(--secondary-color);
-}
-
+/* Scrollbar Styles */
 ::-webkit-scrollbar {
     width: 18px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: var(--background-color); 
+    background-color: var(--background-color);
     border-radius: 10px;
 }
 
