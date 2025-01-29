@@ -102,12 +102,26 @@ function fetchQuestions(subject) {
     });
 }
 
-// Function to display the questions (example, modify as needed)
+// Function to display questions with click-to-show answers
 function displayQuestions(questions) {
     const $container = $("#questions-container").empty();
+
     questions.forEach(q => {
+        // Create a question element
         const $questionDiv = $("<div>").addClass("question").text(q.question);
-        const $answerDiv = $("<div>").addClass("answer").text(q.answer);
+
+        // Create an answer element (hidden by default)
+        const $answerDiv = $("<div>")
+            .addClass("answer")
+            .text(q.answer)
+            .hide(); // Start hidden
+
+        // Toggle answer visibility when the question is clicked
+        $questionDiv.on("click", function () {
+            $answerDiv.slideToggle();
+        });
+
+        // Append to the container
         $container.append($questionDiv, $answerDiv);
     });
 }
@@ -121,8 +135,9 @@ function displayCredits(credits) {
         $creditsDiv = $("<div>").attr("id", "credits").appendTo("body");
     }
     
-    $creditsDiv.text(`Zrobione przez: ${credits}`);
+    $creditsDiv.text(`Definitions by: ${credits}`);
 }
+
 
 
 
