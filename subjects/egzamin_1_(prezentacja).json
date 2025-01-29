@@ -1,0 +1,157 @@
+{
+    "questions": [
+            {
+                "question": "Metody badawcze do badania percepcji",
+                "answer": "Eksperyment behawioralny, obserwacja, tomografia komputerowa, rezonans magnetyczny, spektroskopia."
+            },
+            {
+                "question": "Ośrodkowy układ nerwowy",
+                "answer": "Centrum dowodzenia, czyli mózg i rdzeń kręgowy."
+            },
+            {
+                "question": "Obwodowy układ nerwowy",
+                "answer": "Sieć połączeń (nerwów), które przekazują informacje z ciała do centrum dowodzenia i z powrotem."
+            },
+            {
+                "question": "Neurony",
+                "answer": "Przesyłają informacje w postaci impulsów elektrycznych, dzięki nim czujemy, myślimy i się ruszamy. Około 86 miliardów neuronów jest w ludzkim ciele."
+            },
+            {
+                "question": "Komórki glejowe",
+                "answer": "'Opiekują się' neuronami, zapewniają jedzenie, tlen itd."
+            },
+            {
+                "question": "Mózgowie",
+                "answer": "(2-2,5% wagi ciała, 20% zapotrzebowania energetycznego), dzieli się na tyłomózgowie, śródmózgowie i przodomózgowie."
+            },
+            {
+                "question": "Tyłomózgowie",
+                "answer": "Rdzeń przedłużony, most, mostek."
+            },
+            {
+                "question": "Śródmózgowie",
+                "answer": "Część grzbietowa, część brzuszna."
+            },
+            {
+                "question": "Przodomózgowie",
+                "answer": "Międzymózgowie, kresomózgowie."
+            },
+            {
+                "question": "Kresomózgowie",
+                "answer": "Płat potyliczny - widzenie, płat ciemieniowy - czucie, ruch, płat skroniowy - słyszenie, pamięć, mowa, płat czołowy - myślenie, kontrola, uczucia."
+            },
+            {
+                "question": "Efektor",
+                "answer": "Komórka zamieniająca impuls nerwowy w obserwowalną reakcję organizmu."
+            },
+            {
+                "question": "Bodziec",
+                "answer": "Czynnik zewnętrzny wywołujący reakcję w receptorze."
+            },
+            {
+                "question": "Próg bodźca absolutny",
+                "answer": "Moment, w którym zaczynamy w ogóle zarejestrować bodziec."
+            },
+            {
+                "question": "Próg różnicy",
+                "answer": "Najmniejsza zmiana w bodźcu, którą potrafimy zauważyć."
+            },
+            {
+                "question": "Sensept a percept",
+                "answer": "Sensept to wrażenie z zewnątrz, percept to odczuwanie tego wrażenia wewnątrz."
+            },
+            {
+                "question": "Kategoryzacja rzeczywistości",
+                "answer": "Wyodrębnianie i nazywanie obiektów."
+            },
+            {
+                "question": "Bottom-up (wstępujące)",
+                "answer": "Doświadczamy świat przy pomocy zmysłów."
+            },
+            {
+                "question": "Top-down (zstępujące)",
+                "answer": "Doświadczamy świat przy pomocy zmysłów i wiedzy."
+            },
+            {
+                "question": "Teoria asocjacjonistyczna",
+                "answer": "Spostrzeżenie jest jak puzzle - małe kawałki łączymy w całość."
+            },
+            {
+                "question": "Teoria postaciowa",
+                "answer": "Mózg od razu widzi całość, a potem szczegóły"
+            },
+            {
+                "question": "Teoria rozpoznawania wzorców",
+                "answer": "Mamy w głowie szablony i porównujemy to co widzimy do nich."
+            },
+            {
+                "question": "Teoria cech",
+                "answer": "Skupiamy się na cechach obiektu i na ich podstawie je rozpoznajemy."
+            },
+            {
+                "question": "Pandemonium Selfridge’a",
+                "answer": "W głowie są małe “demony”, które krzyczą, gdy widzą znane im cechy. Im głośniej krzyczą tym bardziej pewni jesteśmy co widzimy."
+            },
+            {
+                "question": "Teoria obliczeniowa",
+                "answer": "Mózg działa jak komputer i przetwarza informacje wzrokowe bit po bicie."
+            },
+            {
+                "question": "Teoria ekologiczna (James Gibson)",
+                "answer": "Wszystko potrzebne do spostrzegania jest już w otoczeniu, nie musimy domyślać się co jest przed nami, mózg od razu wie."
+            },
+            {
+                "question": "Koncepcja trzech systemów percepcyjnych (Ulric Neisser)",
+                "answer": "Bezpośrednie spostrzeganie (odrazu widzimy co jest przed nami), schematy (wiedza o świecie) i eksploracja (badanie świata)."
+            },
+            {
+                "question": "Ilość czopków i pręcików w siatkówce",
+                "answer": "Siatkówka ma 6 milionów czopków i 120 milionów pręcików."
+            },
+            {
+                "question": "Szlak wzrokowy (V1-V5) - droga, którą pokonuje informacja wizualna od oka do mózgu. ",
+                "answer": "V1 - krawędzie, V2 - kształty, V3 - formy 3D, V4 - kolory, V5 - ruch."
+            },
+            {
+                "question": "Wartości NM dla kolorów w czopkach",
+                "answer": "560 nm czerwony, 530 nm zielony, 420 nm niebieski."
+            },
+            {
+                "question": "Protanopia",
+                "answer": "Nierozpoznawanie barwy czerwonej."
+            },
+            {
+                "question": "Deuteranopia",
+                "answer": "Nierozpoznawanie barwy zielonej."
+            },
+            {
+                "question": "Tritanopia",
+                "answer": "Nierozpoznawanie barwy niebieskiej i żółtej."
+            },
+            {
+                "question": "Nurt neuroestetyczny",
+                "answer": "Bada się (za pomocą po prostu medykamentów), co się dzieje w mózgu, gdy patrzymy na dzieła sztuki."
+            },
+            {
+                "question": "Koncepcja Ramachandrana",
+                "answer": "Ssztuka oszukuje nasz mózg, linie na obrazie mogą tworzyć iluzję głębi, ale w rzeczywistości obraz jest płaski. Dlatego sztuka nas kręci."
+            },
+            {
+                "question": "Koncepcja Zekiego",
+                "answer": "Sztuka pomaga zrozumieć świat, bo dzieła sztuki wyciągają pewne elementy z rzeczywistości i je upraszczają oraz uwydatniają."
+            },
+            {
+                "question": "Nurt psychoewolucyjny",
+                "answer": "Patrzenie na sztukę z perspektywy ewolucji."
+            },
+            {
+                "question": "Ośmioraka ścieżka do doświadczenia piękna obrazu",
+                "answer": "Nadmiernego różnicowania, grupowania, kontrastu, izolacji, rozwiązywania problemów percepcyjnych, symetrii, unikania nietypowych przedstawień, metaforyczności. Ramachandran dodaje: powtarzalność i balans."
+            },
+            {
+                "question": "Superbodźce",
+                "answer": "Bodziec, który wywołuje silniejszą reakcję niż naturalny bodziec. Coś przerysowanego. Usta pomalowane czerwoną szminką wywołują silniejszą reakcję niż naturalne. Często wykorzystuje się superbodźce w reklamach."
+            }
+        ],
+        "credits": "Dawid Bomba"
+}
