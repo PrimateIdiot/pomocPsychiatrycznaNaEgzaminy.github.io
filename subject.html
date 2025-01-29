@@ -87,9 +87,17 @@ function getQueryParams() {
 
 // Fetch questions from the JSON file
 function fetchQuestions(subject) {
-    const jsonFileName = `${"subjects/" + subject.replace(" ", "_").toLowerCase()}.json`;
+    // Convert subject name to a valid filename
+    const formattedSubject = subject
+        .toLowerCase() // Convert to lowercase
+        .replace(/\s+/g, "_") // Replace spaces with underscores
+        .replace(/[^\w\(\)żółćęśąźń]/gi, ""); // Remove invalid characters but keep Polish letters and parentheses
+
+    const jsonFileName = `subjects/${formattedSubject}.json`;
+
     return $.getJSON(jsonFileName);
 }
+
 
 let disableClickFlag = false;
 

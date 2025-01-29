@@ -134,6 +134,8 @@ header {
 .toggle {
     position: relative;
     display: inline-block;
+    min-width: 90px;
+    min-height: 40px;
     width: 90px;
     height: 40px;
 }

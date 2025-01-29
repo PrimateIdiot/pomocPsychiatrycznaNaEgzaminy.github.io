@@ -1,7 +1,7 @@
 // Categories and their subjects
 const categories = {
-    "Percepcja wzrokowa": ["Egzamin 1", "Subject B", "Subject C"],
-    "Podstawy samokształcenia": ["Subject X", "Subject Y", "Subject Z"]
+    "Percepcja wzrokowa": ["Kolokwium 1", "Egzamin 1 (książka)", "Subject C"],
+    "Podstawy samokształcenia": ["To", "Nic", "Nie","Ma"]
 };
 
 // Dynamic question container
