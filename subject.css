@@ -156,10 +156,6 @@ header {
     {
         font-size: 18px;
     }
-
-    .pin-checkbox:checked {
-        border: 18px solid var(--primary-color);
-    }
 }
 
 
