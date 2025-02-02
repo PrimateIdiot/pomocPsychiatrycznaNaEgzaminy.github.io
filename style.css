@@ -2,9 +2,9 @@
 :root {
     --background-color: #FBFBFE;
     --text-color: #000000;
-    --primary-color: #E17564;
+    --primary-color: #7a7a7a; 
     --secondary-color: #ccc;
-    --hover-color: #d86453;
+    --hover-color: #5e5e5e;
 }
 
 /* Dark Mode Colors */

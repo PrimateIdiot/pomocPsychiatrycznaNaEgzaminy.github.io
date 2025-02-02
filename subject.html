@@ -34,7 +34,7 @@
             $("#subject-title").text(`${category} - ${subject}`);
 
             // Fetch questions and display them
-            fetchQuestions(subject)
+            fetchQuestions(category, subject)
                 .done((data) => {
                     const $container = $("#questions-container");
                     displayQuestions(data.questions);  // Initially display questions
@@ -72,12 +72,13 @@
         };
     }
 
-    function fetchQuestions(subject) {
-        const formattedSubject = subject
+    function fetchQuestions(category, subject) {
+        const formattedSubject = (category + " " + subject)
             .toLowerCase()
             .replace(/\s+/g, "_")
             .replace(/[^\w\(\)żółćęśąźń]/gi, "");
 
+        console.log(formattedSubject)
         const jsonFileName = `subjects/${formattedSubject}.json`;
 
         return $.getJSON(jsonFileName).done(function (data) {
@@ -90,32 +91,73 @@
 
     // Function to display questions with click-to-show answers
     function displayQuestions(questions) {
-        const $container = $("#questions-container").empty();
+    const $container = $("#questions-container").empty();
 
-        questions.forEach(q => {
-            const $questionDiv = $("<div>").addClass("question").text(q.question);
-            const $answerDiv = $("<div>")
-                .addClass("answer")
-                .text(q.answer)
-                .hide();
+    questions.forEach(q => {
+        const $questionDiv = $("<div>").addClass("question").text(q.question);
 
-            $questionDiv.on("click", function () {
-                $answerDiv.slideToggle();
+        let $answerDiv;
+        if (Array.isArray(q.answer)) {  // Check if the answer is an array (unordered list)
+            $answerDiv = $("<div>").addClass("answer");
+            const $ul = $("<ul>");  // Create an unordered list
+            q.answer.forEach(item => {
+                const $li = $("<li>").text(item);  // Add each item as a list item
+                $ul.append($li);
             });
-
-            $container.append($questionDiv, $answerDiv);
-        });
-    }
-
-    // Function to reshuffle questions
-    function reshuffleQuestions(questions) {
-        // Shuffle questions using a simple algorithm (Fisher-Yates shuffle)
-        for (let i = questions.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [questions[i], questions[j]] = [questions[j], questions[i]]; // Swap
+            $answerDiv.append($ul);
+        } else {
+            $answerDiv = $("<div>").addClass("answer").text(q.answer);  // Regular answer (text)
         }
 
-        displayQuestions(questions); // Re-display the shuffled questions
+        $answerDiv.hide();  // Hide the answer by default
+        const $checkbox = $("<input>").attr("type", "checkbox").addClass("pin-checkbox");
+
+        $questionDiv.on("click", function () {
+            $answerDiv.slideToggle();
+        });
+
+        const $wrapper = $("<div>").addClass("question-wrapper");
+        $wrapper.append($checkbox, $questionDiv, $answerDiv);
+        $container.append($wrapper);
+    });
+}
+
+
+    function reshuffleQuestions() {
+        let unpinned = [];
+        let pinned = [];
+
+        $(".question-wrapper").each(function () {
+            const isChecked = $(this).find(".pin-checkbox").prop("checked");
+            if (isChecked) {
+                pinned.push({
+                    question: $(this).find(".question").text(),
+                    answer: $(this).find(".answer").text()
+                });
+            } else {
+                unpinned.push({
+                    question: $(this).find(".question").text(),
+                    answer: $(this).find(".answer").text()
+                });
+            }
+        });
+
+        // Shuffle only unpinned questions
+        for (let i = unpinned.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [unpinned[i], unpinned[j]] = [unpinned[j], unpinned[i]];
+        }
+
+        // Re-display with unpinned first, then pinned at the bottom
+        displayQuestions([...unpinned, ...pinned]);
+
+        // Restore checked state for pinned checkboxes
+        $(".question-wrapper").each(function () {
+            const text = $(this).find(".question").text();
+            if (pinned.some(p => p.question === text)) {
+                $(this).find(".pin-checkbox").prop("checked", true);
+            }
+        });
     }
 
     // Function to display credits in the bottom-right corner

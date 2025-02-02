@@ -2,7 +2,7 @@
 :root {
     --background-color: #FBFBFE; 
     --text-color: #000000; 
-    --primary-color: #E17564; 
+    --primary-color: #7a7a7a; 
     --secondary-color: #ccc; 
 }
 
@@ -62,6 +62,35 @@ header {
     border-left: 3px solid var(--primary-color);
     border-radius: 5px;
 }
+
+.pin-checkbox {
+    float: right;
+    appearance: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 7px;
+    margin-right: 10px;
+}
+
+/* Checkbox Checked Style */
+.pin-checkbox:checked {
+    border: 17px solid var(--primary-color);
+}
+
+.answer ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.answer li {
+    margin-bottom: 8px;
+}
+
 
 /* Floating Buttons */
 #floating-buttons {
