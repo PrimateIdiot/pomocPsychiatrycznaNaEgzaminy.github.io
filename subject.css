@@ -80,6 +80,7 @@ header {
 /* Checkbox Checked Style */
 .pin-checkbox:checked {
     border: 17px solid var(--primary-color);
+    background-color: var(--primary-color);
 }
 
 .answer ul {
