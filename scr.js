@@ -1,8 +1,8 @@
 // Categories and their subjects
 const categories = {
     "Percepcja wzrokowa": ["Kolokwium 1", "Egzamin 1 (książka)", "Egzamin 1 (prezentacja)"],
-    "Podstawy warsztatu graficznego": ["Egzamin 1"],
-    "Wstęp do projektowania graficznego": ["Egzamin 1"]
+    "Podstawy projektowania graficznego": ["Egzamin 1"],
+    "Grafika wektorowa i rastrowa": ["Egzamin 1"]
 };
 
 // Dynamic question container

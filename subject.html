@@ -97,20 +97,10 @@
     questions.forEach(q => {
         const $questionDiv = $("<div>").addClass("question").text(q.question);
 
-        let $answerDiv;
-        if (Array.isArray(q.answer)) {  // Check if the answer is an array (unordered list)
-            $answerDiv = $("<div>").addClass("answer");
-            const $ul = $("<ul>");  // Create an unordered list
-            q.answer.forEach(item => {
-                const $li = $("<li>").text(item);  // Add each item as a list item
-                $ul.append($li);
-            });
-            $answerDiv.append($ul);
-        } else {
-            $answerDiv = $("<div>").addClass("answer").text(q.answer);  // Regular answer (text)
-        }
+        let $answerDiv = $("<div>").addClass("answer").html(q.answer); // Allow HTML inside the answer
 
-        $answerDiv.hide();  // Hide the answer by default
+        $answerDiv.hide(); // Hide the answer by default
+
         const $checkbox = $("<input>").attr("type", "checkbox").addClass("pin-checkbox");
 
         $questionDiv.on("click", function () {
@@ -122,6 +112,8 @@
         $container.append($wrapper);
     });
 }
+
+
 
 
     function reshuffleQuestions() {

@@ -2,13 +2,8 @@
     "questions": [
             {
                 "question": "Metody badawcze do badania percepcji",
-                "answer": [
-                    "Eksperyment behawioralny",
-                    "obserwacja",
-                    "tomografia komputerowa",
-                    "rezonans magnetyczny",
-                    "spektroskopia"
-                ]
+                "answer": "<ul><li>Eksperyment behawioralny</li><li>Obserwacja</li><li>Tomografia komputerowa</li><li>Rezonans magnetyczny</li><li>Spektroskopia</li></ul>"
+                
             },
             {
                 "question": "Ośrodkowy układ nerwowy",
